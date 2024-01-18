@@ -1,0 +1,26 @@
+#InputJSON{
+    position: absolute; 
+    top:1%;
+    left:0% ; 
+    width: 30% ; 
+    height : 98% ;
+    font-size: 150%;
+  }
+
+  #svgbox{
+    top: 1%;
+    position: absolute; 
+    left:30% ; 
+    width: 70%; 
+    height : 98%;
+    cursor: grab;
+  }
+
+  #visualize-button{
+    position: absolute; 
+    left:5% ; 
+    bottom : 5%; 
+    width: 15% ; 
+    height : 10% ;
+    font-size: 200%;
+  }
