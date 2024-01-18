@@ -6,88 +6,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="styles/style.css">
-    <style>
-      
-      
-
-    </style>
+    
 </head>
 
 <body>
-  <textarea  name="JSONtext" id="InputJSON" cols="50" rows="60">
+
+  <table>
+    <tr>
+      <td>
+        <button type="menu"  id = "inputToggle" > X </button>
+      </td>
+      
+      <td>
+        
+      </td>
+      
+    </tr>
+    <tr id = "main-content">
+      <td id = "code-sec"  >
+        <div id="code-section">
+          <textarea  name="JSONtext" id="InputJSON" >
+{
+  "employees": [
     {
-      "a":{
-        "aa":{
-          "aaa":{},
-          "aab":{},
-          "aac":{}
-        },
-        "ab":{
-          "aba": {},
-          "abb": {},
-          "abc": {}
-        },
-        "ac":{
-          "aca": {},
-          "acb": {},
-          "acc": {}
-        }
-      },
-      "b": {
-        "ba": {
-          "baa": {},
-          "bab": {},
-          "bac": {}
-        },
-        "bb": {
-          "bba": {},
-          "bbb": {},
-          "bbc": {}
-        },
-        "bc": {
-          "bca": {},
-          "bcb": {},
-          "bcc": {}
-        }
-      },
-      "c": {
-        "ca": {
-          "caa": {},
-          "cab": {},
-          "cac": {}
-        },
-        "cb": {
-          "cba": {},
-          "cbb": {},
-          "cbc": {}
-        },
-        "cc": {
-          "cca": {},
-          "ccb": {},
-          "ccc": {}
-        }
-      }
-    
+      "id": 1,
+      "name": "John Doe",
+      "position": "Software Engineer",
+      "skills": ["JavaScript", "React", "Node.js"]
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "position": "UX Designer",
+      "skills": ["UI/UX Design", "Sketch", "InVision"]
     }
-  </textarea>
-  <button  id = "visualize-button"   > Visualize </button>
-
-  <svg  version="1.1" width="100%" height="1500" id = "svgbox" class = "draggable-svg" xmlns="http://www.w3.org/2000/svg">
-      
-        
-  </svg>
-
-
+  ],
+  "departments": [
+    {
+      "id": "dev",
+      "name": "Development",
+      "teamLead": {
+        "id": 3,
+        "name": "Alex Johnson",
+        "position": "Team Lead",
+        "skills": ["Java", "Spring Boot", "SQL"]
+      },
+      "members": [
+        {
+          "id": 4,
+          "name": "Emily Brown",
+          "position": "Junior Developer",
+          "skills": ["Python", "Django"]
+        },
+        {
+          "id": 5,
+          "name": "Mike Anderson",
+          "position": "Senior Developer",
+          "skills": ["C#", "ASP.NET", "MVC"]
+        }
+      ]
+    },
+    {
+      "id": "design",
+      "name": "Design",
+      "teamLead": {
+        "id": 6,
+        "name": "Sophie Turner",
+        "position": "Design Lead",
+        "skills": ["Adobe XD", "Illustrator"]
+      },
+      "members": [
+        {
+          "id": 7,
+          "name": "Chris Evans",
+          "position": "Graphic Designer",
+          "skills": ["Photoshop", "Typography"]
+        },
+        {
+          "id": 8,
+          "name": "Olivia White",
+          "position": "UX Researcher",
+          "skills": ["User Testing", "Persona Creation"]
+        }
+      ]
+    }
+  ]
+}
+            
+          </textarea>
+        </div>
+      </td>
+      <td >
+        <div id="output-section" >
+          <svg  version="1.1" width="100%" height="100%" id = "svgbox" class = "draggable-svg" xmlns="http://www.w3.org/2000/svg">
+            
+              
+          </svg>
+        </div>
+      </td>
+    </tr>
     
+    <tr>
+      <td>
+        <button  id = "visualize-button"   > Visualize </button>
+      </td>
+    </tr>
 
-    <svg version="1.1" width="0" height="0" id = "tempsvg" xmlns="http://www.w3.org/2000/svg">
-      
-        
-    </svg>
+  </table>
+
+
+
+  
+  
+
+  <svg version="1.1" width="0" height="0" id = "tempsvg" xmlns="http://www.w3.org/2000/svg"></svg>
 
 
     <script src = "scripts/main.js" ></script>
     <script src = "scripts/drag.js" ></script>
+    <script src = "scripts/layout.js"></script>
     
 
     <!-- 
