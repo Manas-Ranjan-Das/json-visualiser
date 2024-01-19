@@ -21,6 +21,7 @@ visualizeButton.addEventListener("click", ()=>{
     textbox = document.getElementById("InputJSON");
     console.log(textbox.value);
     jsonObject = JSON.parse(textbox.value);
+    textbox.value = JSON.stringify( jsonObject , undefined , '    ' );
     svgbox.innerHTML = "";
     svgbox.appendChild(traverseObject(jsonObject));
 })
