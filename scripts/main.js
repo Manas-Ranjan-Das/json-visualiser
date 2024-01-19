@@ -11,22 +11,24 @@ const otherLineYDisplace = 1.2 ;
 var textLineTemplate = document.createElementNS(svgNS,"tspan");
 textLineTemplate.setAttribute("x","0");
 var svgbox = document.getElementById("svgbox");
+var svgGroupScaler = document.getElementById("svg-group-scaler");
 var tempsvg = document.getElementById("tempsvg");
 var textbox = document.getElementById("InputJSON");
 var visualizeButton = document.getElementById("visualize-button");
 var jsonObject = JSON.parse(textbox.innerHTML);
 
-console.log(visualizeButton);
+console.log(svgGroupScaler);
 visualizeButton.addEventListener("click", ()=>{
     textbox = document.getElementById("InputJSON");
     console.log(textbox.value);
     jsonObject = JSON.parse(textbox.value);
     textbox.value = JSON.stringify( jsonObject , undefined , '    ' );
-    svgbox.innerHTML = "";
-    svgbox.appendChild(traverseObject(jsonObject));
+    svgGroupScaler.innerHTML = "";
+    svgGroupScaler.appendChild(traverseObject(jsonObject));
 })
 
-svgbox.appendChild(traverseObject(jsonObject));
+svgGroupScaler.innerHTML = "";
+svgGroupScaler.appendChild(traverseObject(jsonObject));
 //svgbox.appendChild (createBoxWithText(["Hello World","Hello World","Hello World"]));
 
 function traverseObject( object  , name) {
@@ -244,4 +246,20 @@ function getTransformXY(element) {
         console.log("No match found.");
     }
     return {x:num1,y:num2};
+}
+
+function getTransformScale (element) {
+    var inputString = element.getAttribute("transform");
+    if(inputString==null){
+        return 1;
+    }
+    var regex = /scale\((\d+(\.\d+)?)\)/;
+    var match = inputString.match(regex);
+
+    if (match) {
+        var scaleValue = parseFloat(match[1]);
+        return scaleValue ;
+    } else {
+        console.log("error in getTransformScale");
+    }
 }
