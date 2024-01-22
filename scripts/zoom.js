@@ -10,18 +10,7 @@ var e ;
 
 
 svgbox.addEventListener ("wheel" , handleZoom);
-// svgbox.addEventListener("touchstart" , zoomTouchStart);
-// svgbox.addEventListener("touchmove" ,zoomTouchMove);
 
-// function zoomTouchStart (event){
-//     if(event.touches.length == 2){
-
-//     }
-// }
-
-// function zoomTouchMove(event){
-
-// }
 
 
 

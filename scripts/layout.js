@@ -29,12 +29,3 @@ visualizeButton.addEventListener("mousedown" , (e)=>{
     }
 })
 
-// closeButton.addEventListener("touchstart" , (e)=>{
-//     console.log("aaa");
-//     if(codeSec.style.display != "none"){
-//         codeSec.style.display = "none";
-//     }
-//     else{
-//         codeSec.style.display = "";
-//     }
-// })
