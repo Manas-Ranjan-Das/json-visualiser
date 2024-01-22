@@ -1,10 +1,17 @@
 // Defined Constants 
 const svgNS = "http://www.w3.org/2000/svg";
-const arrowLength = 50 ;
+const arrowLength = 75 ;
 const interBoxPadding = 20 ;
 const textBoxPadding = 30 ;
 const firstLineYDisplace = 0.9 ;
 const otherLineYDisplace = 1.2 ;
+const boxFill = "#180029";
+const boxStroke = "#3bff89";
+const boxRadius = "6";
+const arrowStroke = "#00ccff";
+const arrowWidth = "2";
+const textStroke = "#00aaff";
+const textFill = "#00a6ff";
 
 
 // Accessed Elements
@@ -163,19 +170,23 @@ function createBoxWithText( lines ) {
     
     // Hierarchy 
     tempsvg.appendChild(textBoxGroup);
-    textBoxGroup.appendChild(text);
     textBoxGroup.appendChild(box);
+    textBoxGroup.appendChild(text);
 
     // text atributes
     text.setAttribute("font-family","Consolas");
+    // text.setAttribute("stroke",textStroke);
+    text.setAttribute("fill",textFill);
     addLinesToText(text,lines);
     text.setAttribute("transform" ,"translate("+ textBoxPadding/2 + "," + textBoxPadding/2 + ")"  );
 
     // box atributes
     box.setAttribute("height" ,text.getBBox().height +textBoxPadding  );
     box.setAttribute("width" ,text.getBBox().width +textBoxPadding );
-    box.setAttribute("fill" , "transparent" );
-    box.setAttribute("stroke" , "black" );
+    box.setAttribute("fill" , boxFill );
+    box.setAttribute("stroke" , boxStroke );
+    box.setAttribute("rx",boxRadius);
+    box.setAttribute("ry",boxRadius);
     
     // group positioning
     textBoxGroup.setAttribute("transform" ,"translate(0, 0)");
@@ -202,7 +213,7 @@ function addLinesToText ( text , lines){
 
 }
 
-function drawArrowsToChildElements (group){
+function drawArrowsToChildElements (group , isList){
     var children = group.children ;
     var arrowFrom = [0, group.getBBox().height/2] ;
     var arrowTo ;
@@ -218,7 +229,8 @@ function drawArrowsToChildElements (group){
         arrow = document.createElementNS(svgNS,"path");
         arrow.setAttribute("d","M "+ arrowFrom[0] +" " + arrowFrom[1] + "C " + (arrowFrom[0]+ arrowLength * 0.9) + " " + arrowFrom[1] + " " + (arrowTo[0] - arrowLength*0.9) + " " + arrowTo[1] + " " + arrowTo[0] + " " + arrowTo[1]);
         arrow.setAttribute("fill","transparent");
-        arrow.setAttribute("stroke","black");
+        arrow.setAttribute("stroke",arrowStroke);
+        arrow.setAttribute("stroke-width",arrowWidth)
         arrows.push(arrow);
 
     }
