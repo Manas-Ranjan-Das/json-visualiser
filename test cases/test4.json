@@ -1,0 +1,60 @@
+{
+    "company": "TechCorp",
+    "employees": [
+      {
+        "id": 1,
+        "name": "Alice Johnson",
+        "position": "Software Engineer",
+        "department": "Engineering",
+        "contact": {
+          "email": "alice@example.com",
+          "phone": "+1234567890"
+        },
+        "projects": [
+          {
+            "name": "Project A",
+            "status": "In Progress",
+            "tasks": [
+              {"task": "Implement feature X", "status": "Completed"},
+              {"task": "Fix bug in module Y", "status": "In Progress"}
+            ]
+          },
+          {
+            "name": "Project B",
+            "status": "Pending",
+            "tasks": [
+              {"task": "Design UI for module Z", "status": "Not Started"},
+              {"task": "Write documentation", "status": "Not Started"}
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Bob Smith",
+        "position": "Data Scientist",
+        "department": "Data Science",
+        "contact": {
+          "email": "bob@example.com",
+          "phone": "+9876543210"
+        },
+        "projects": [
+          {
+            "name": "Data Analysis",
+            "status": "Completed",
+            "tasks": [
+              {"task": "Collect data samples", "status": "Completed"},
+              {"task": "Build predictive model", "status": "Completed"}
+            ]
+          }
+        ]
+      }
+    ],
+    "departments": ["Engineering", "Data Science", "Marketing"],
+    "location": {
+      "city": "TechCity",
+      "country": "Techland",
+      "zipcode": "54321"
+    }
+  }
+  
