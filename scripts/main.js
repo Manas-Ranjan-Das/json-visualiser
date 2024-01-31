@@ -37,7 +37,7 @@ visualizeButton.addEventListener("click", ()=>{
 })
 
 svgGroupScaler.innerHTML = "";
-svgGroupScaler.appendChild(traverseObject(jsonObject));
+svgGroupScaler.appendChild(traverseObject(jsonObject)[0]);
 //svgbox.appendChild (createBoxWithText(["Hello World","Hello World","Hello World"]));
 
 function traverseObject( object  , name) {
@@ -57,14 +57,14 @@ function traverseObject( object  , name) {
             }
         }
 
-        if(terminals.length > 0)
-            boxes.push(createBoxWithText(terminals));
+        // if(terminals.length > 0)
+        //     boxes.push(createBoxWithText(terminals));
 
         for(var i = 0;i<keys.length ;i++ ){
             if( !isLeaf(object[keys[i]])){
-                box1 = createBoxWithText([keys[i]]);
                 box2 = traverseObject(object[keys[i]] , keys[i] );
-                tempGroup = groupBoxesLaterally (box1,box2);
+                box1 = createBoxWithText([keys[i]].concat(box2[1]));
+                tempGroup = groupBoxesLaterally (box1,box2[0]);
                 boxes.push(tempGroup);
             }
         }
@@ -79,21 +79,21 @@ function traverseObject( object  , name) {
             }
         }
 
-        if(terminals.length > 0)
-            boxes.push(createBoxWithText(terminals));
+        // if(terminals.length > 0)
+        //     boxes.push(createBoxWithText(terminals));
 
         for(var i = 0;i<object.length ;i++ ){
             if(!isLeaf(object[i])){
-                box1 = createBoxWithText([name +"["+i+"]"]);
                 box2 = traverseObject(object[i] ,name +"["+i+"]" );
-                tempGroup = groupBoxesLaterally (box1,box2);
+                box1 = createBoxWithText([name +"["+i+"]"].concat(box2[1]) );
+                tempGroup = groupBoxesLaterally (box1,box2[0]);
                 boxes.push(tempGroup);
             }
         }
     }
     tempGroup = groupBoxesVertically (boxes);
     drawArrowsToChildElements(tempGroup);
-    return tempGroup;
+    return [tempGroup,terminals];
 }
 
 
@@ -244,7 +244,7 @@ function groupBoxesLaterally (box1,box2){
     tempsvg.appendChild(tempGroup);
     tempGroup.appendChild(box1);
     tempGroup.appendChild(box2);
-    box1.setAttribute("transform" ,"translate("+ 0 + "," + (box2.getBBox().height/2 - box1.getBBox().height/2) + ")")
+    box1.setAttribute("transform" ,"translate("+ 0 + "," +Math.max(0, (box2.getBBox().height/2 - box1.getBBox().height/2) ) + ")")
     box2.setAttribute("transform" ,"translate("+ box1.getBBox().width + "," + 0 + ")")
     return tempGroup ;
 }
