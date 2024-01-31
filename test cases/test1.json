@@ -1,0 +1,67 @@
+{
+    "employees": [
+      {
+        "id": 1,
+        "name": "John Doe",
+        "position": "Software Engineer",
+        "skills": ["JavaScript", "React", "Node.js"]
+      },
+      {
+        "id": 2,
+        "name": "Jane Smith",
+        "position": "UX Designer",
+        "skills": ["UI/UX Design", "Sketch", "InVision"]
+      }
+    ],
+    "departments": [
+      {
+        "id": "dev",
+        "name": "Development",
+        "teamLead": {
+          "id": 3,
+          "name": "Alex Johnson",
+          "position": "Team Lead",
+          "skills": ["Java", "Spring Boot", "SQL"]
+        },
+        "members": [
+          {
+            "id": 4,
+            "name": "Emily Brown",
+            "position": "Junior Developer",
+            "skills": ["Python", "Django"]
+          },
+          {
+            "id": 5,
+            "name": "Mike Anderson",
+            "position": "Senior Developer",
+            "skills": ["C#", "ASP.NET", "MVC"]
+          }
+        ]
+      },
+      {
+        "id": "design",
+        "name": "Design",
+        "teamLead": {
+          "id": 6,
+          "name": "Sophie Turner",
+          "position": "Design Lead",
+          "skills": ["Adobe XD", "Illustrator"]
+        },
+        "members": [
+          {
+            "id": 7,
+            "name": "Chris Evans",
+            "position": "Graphic Designer",
+            "skills": ["Photoshop", "Typography"]
+          },
+          {
+            "id": 8,
+            "name": "Olivia White",
+            "position": "UX Researcher",
+            "skills": ["User Testing", "Persona Creation"]
+          }
+        ]
+      }
+    ]
+  }
+            

@@ -1,40 +1,53 @@
 // Defined Constants 
 const svgNS = "http://www.w3.org/2000/svg";
-const arrowLength = 50 ;
+const arrowLength = 75 ;
 const interBoxPadding = 20 ;
 const textBoxPadding = 30 ;
 const firstLineYDisplace = 0.9 ;
 const otherLineYDisplace = 1.2 ;
+const boxFill = "#180029";
+const boxStroke = "#3bff89";
+const boxRadius = "6";
+const arrowStroke = "#00ccff";
+const arrowWidth = "2";
+const textStroke = "#00aaff";
+const textFill = "#00a6ff";
 
 
 // Accessed Elements
 var textLineTemplate = document.createElementNS(svgNS,"tspan");
 textLineTemplate.setAttribute("x","0");
 var svgbox = document.getElementById("svgbox");
+var svgGroupScaler = document.getElementById("svg-group-scaler");
 var tempsvg = document.getElementById("tempsvg");
 var textbox = document.getElementById("InputJSON");
 var visualizeButton = document.getElementById("visualize-button");
 var jsonObject = JSON.parse(textbox.innerHTML);
 
-console.log(visualizeButton);
+
+// Start point
+console.log(svgGroupScaler);
 visualizeButton.addEventListener("click", ()=>{
     textbox = document.getElementById("InputJSON");
     console.log(textbox.value);
     jsonObject = JSON.parse(textbox.value);
     textbox.value = JSON.stringify( jsonObject , undefined , '    ' );
-    svgbox.innerHTML = "";
-    svgbox.appendChild(traverseObject(jsonObject));
+    svgGroupScaler.innerHTML = "";
+    svgGroupScaler.appendChild(traverseObject(jsonObject));
 })
 
-svgbox.appendChild(traverseObject(jsonObject));
+svgGroupScaler.innerHTML = "";
+svgGroupScaler.appendChild(traverseObject(jsonObject));
 //svgbox.appendChild (createBoxWithText(["Hello World","Hello World","Hello World"]));
 
 function traverseObject( object  , name) {
     var terminals = [] ;
     var boxes = [] ;
-    var temp1 ;
-    var temp2 ;
+    var box1 ;
+    var box2 ;
     var tempGroup ;
+
+    // objects
     if(objectType(object) == "object"){
         // console.log("object");
         var keys = Object.keys(object);
@@ -49,33 +62,15 @@ function traverseObject( object  , name) {
 
         for(var i = 0;i<keys.length ;i++ ){
             if( !isLeaf(object[keys[i]])){
-                temp1 = createBoxWithText([keys[i]]);
-                temp2 = traverseObject(object[keys[i]] , keys[i] );
-                tempGroup = document.createElementNS(svgNS,"g");
-                tempsvg.appendChild(tempGroup);
-                tempGroup.appendChild(temp1);
-                tempGroup.appendChild(temp2);
-                temp1.setAttribute("transform" ,"translate("+ 0 + "," + (temp2.getBBox().height/2 - temp1.getBBox().height/2) + ")")
-                temp2.setAttribute("transform" ,"translate("+ temp1.getBBox().width + "," + 0 + ")")
+                box1 = createBoxWithText([keys[i]]);
+                box2 = traverseObject(object[keys[i]] , keys[i] );
+                tempGroup = groupBoxesLaterally (box1,box2);
                 boxes.push(tempGroup);
             }
         }
-
-        tempGroup = document.createElementNS(svgNS,"g");
-        tempsvg.appendChild(tempGroup);
-        height = 0 ;
-        for (let i = 0; i < boxes.length; i++) {
-            tempGroup.appendChild(boxes[i]);
-            boxes[i].setAttribute("transform" ,"translate("+ arrowLength + "," + height + ")");
-            height += boxes[i].getBBox().height ;
-            height += interBoxPadding ;
-        }
-        drawArrowsToChildElements(tempGroup)
-        return tempGroup;
-
     }
-    // lists
 
+    // lists
     if(objectType(object) == "list"){
         //console.log("list");
         for(var i = 0;i<object.length ;i++ ){
@@ -89,39 +84,16 @@ function traverseObject( object  , name) {
 
         for(var i = 0;i<object.length ;i++ ){
             if(!isLeaf(object[i])){
-                temp1 = createBoxWithText([name +"["+i+"]"]);
-                temp2 = traverseObject(object[i] ,name +"["+i+"]" );
-                tempGroup = document.createElementNS(svgNS,"g");
-                tempsvg.appendChild(tempGroup);
-                tempGroup.appendChild(temp1);
-                tempGroup.appendChild(temp2);
-                temp1.setAttribute("transform" ,"translate("+ 0 + "," + (temp2.getBBox().height/2 - temp1.getBBox().height/2) + ")")
-                temp2.setAttribute("transform" ,"translate("+ temp1.getBBox().width + "," + 0 + ")")
+                box1 = createBoxWithText([name +"["+i+"]"]);
+                box2 = traverseObject(object[i] ,name +"["+i+"]" );
+                tempGroup = groupBoxesLaterally (box1,box2);
                 boxes.push(tempGroup);
             }
-
         }
-        tempGroup = document.createElementNS(svgNS,"g");
-        tempsvg.appendChild(tempGroup);
-        height = 0 ;
-        for (let i = 0; i < boxes.length; i++) {
-            tempGroup.appendChild(boxes[i]);
-            boxes[i].setAttribute("transform" ,"translate("+ arrowLength + "," + height + ")");
-            height += boxes[i].getBBox().height ;
-            height += interBoxPadding ;
-        }
-        drawArrowsToChildElements(tempGroup)
-        return tempGroup;
-
     }
-    
-    if(objectType(object) == "others"){
-        // console.log("others");
-
-    }
-    console.log(object);
-
-
+    tempGroup = groupBoxesVertically (boxes);
+    drawArrowsToChildElements(tempGroup);
+    return tempGroup;
 }
 
 
@@ -161,19 +133,23 @@ function createBoxWithText( lines ) {
     
     // Hierarchy 
     tempsvg.appendChild(textBoxGroup);
-    textBoxGroup.appendChild(text);
     textBoxGroup.appendChild(box);
+    textBoxGroup.appendChild(text);
 
     // text atributes
     text.setAttribute("font-family","Consolas");
+    // text.setAttribute("stroke",textStroke);
+    text.setAttribute("fill",textFill);
     addLinesToText(text,lines);
     text.setAttribute("transform" ,"translate("+ textBoxPadding/2 + "," + textBoxPadding/2 + ")"  );
 
     // box atributes
     box.setAttribute("height" ,text.getBBox().height +textBoxPadding  );
     box.setAttribute("width" ,text.getBBox().width +textBoxPadding );
-    box.setAttribute("fill" , "transparent" );
-    box.setAttribute("stroke" , "black" );
+    box.setAttribute("fill" , boxFill );
+    box.setAttribute("stroke" , boxStroke );
+    box.setAttribute("rx",boxRadius);
+    box.setAttribute("ry",boxRadius);
     
     // group positioning
     textBoxGroup.setAttribute("transform" ,"translate(0, 0)");
@@ -200,7 +176,7 @@ function addLinesToText ( text , lines){
 
 }
 
-function drawArrowsToChildElements (group){
+function drawArrowsToChildElements (group , isList){
     var children = group.children ;
     var arrowFrom = [0, group.getBBox().height/2] ;
     var arrowTo ;
@@ -216,7 +192,8 @@ function drawArrowsToChildElements (group){
         arrow = document.createElementNS(svgNS,"path");
         arrow.setAttribute("d","M "+ arrowFrom[0] +" " + arrowFrom[1] + "C " + (arrowFrom[0]+ arrowLength * 0.9) + " " + arrowFrom[1] + " " + (arrowTo[0] - arrowLength*0.9) + " " + arrowTo[1] + " " + arrowTo[0] + " " + arrowTo[1]);
         arrow.setAttribute("fill","transparent");
-        arrow.setAttribute("stroke","black");
+        arrow.setAttribute("stroke",arrowStroke);
+        arrow.setAttribute("stroke-width",arrowWidth)
         arrows.push(arrow);
 
     }
@@ -244,4 +221,43 @@ function getTransformXY(element) {
         console.log("No match found.");
     }
     return {x:num1,y:num2};
+}
+
+function getTransformScale (element) {
+    var inputString = element.getAttribute("transform");
+    if(inputString==null){
+        return 1;
+    }
+    var regex = /scale\((\d+(\.\d+)?)\)/;
+    var match = inputString.match(regex);
+
+    if (match) {
+        var scaleValue = parseFloat(match[1]);
+        return scaleValue ;
+    } else {
+        console.log("error in getTransformScale");
+    }
+}
+
+function groupBoxesLaterally (box1,box2){
+    tempGroup = document.createElementNS(svgNS,"g");
+    tempsvg.appendChild(tempGroup);
+    tempGroup.appendChild(box1);
+    tempGroup.appendChild(box2);
+    box1.setAttribute("transform" ,"translate("+ 0 + "," + (box2.getBBox().height/2 - box1.getBBox().height/2) + ")")
+    box2.setAttribute("transform" ,"translate("+ box1.getBBox().width + "," + 0 + ")")
+    return tempGroup ;
+}
+
+function groupBoxesVertically (boxes){
+    tempGroup = document.createElementNS(svgNS,"g");
+    tempsvg.appendChild(tempGroup);
+    height = 0 ;
+    for (let i = 0; i < boxes.length; i++) {
+        tempGroup.appendChild(boxes[i]);
+        boxes[i].setAttribute("transform" ,"translate("+ arrowLength + "," + height + ")");
+        height += boxes[i].getBBox().height ;
+        height += interBoxPadding ;
+    }
+    return tempGroup ;
 }
