@@ -75,7 +75,7 @@ function traverseObject( object  , name) {
         //console.log("list");
         for(var i = 0;i<object.length ;i++ ){
             if(isLeaf(object[i])){
-                terminals.push(""+name +"["+i+"]"+" : "+object[i]);
+                terminals.push(""+name +"["+i+"]"+" = "+object[i]);
             }
         }
 
