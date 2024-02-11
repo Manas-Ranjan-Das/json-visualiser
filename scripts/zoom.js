@@ -20,7 +20,7 @@ function handleZoom(event) {
     console.log(event);
     zoomPosition = [event.offsetX ,event.offsetY]
 
-    const newScale = event.deltaY < 0 ? zoomBy (1.1) : zoomBy (1 / 1.1);
+    const newScale = event.deltaY < 0 ? zoomBy (1.05) : zoomBy (1 / 1.05);
     
 }
 
